@@ -10,11 +10,12 @@ import {
     Link,
     Button,
     Heading,
+    Text,
     useToast,
     useColorModeValue,
   } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import router from 'next/router';
+import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import useMounted from '../hooks/useMounted';
   
@@ -22,39 +23,34 @@ import useMounted from '../hooks/useMounted';
       const [isSubmiting,setIsSubmiting] = useState(false);
       const [email, setEmail] = useState('');
       const [password, setPassword] = useState('');
-
-      const router = useRouter();
-      const toast = useToast();
+      const [passConfirm, setPassConfirm] = useState('');
       
       //Custom Hooks
       const mounted = useMounted();
-      const {signIn, currentUser} = useAuth();
+      const {signUp} = useAuth();
+      const toast = useToast();
       
       
-      useEffect(()=>{
-        if(currentUser){
-            router.push('/dashboard');
-        }
-    })
-
-      const handleSignIn = async (e) =>{
+      const handleSignUp = async (e) =>{
           e.preventDefault()
           
           if(!email || !password){
             return alert("Credenciais Invalidas")
           }
 
-
+          if(password!==passConfirm) {
+              return console.log("senhas diferentes")
+            }
+            
             setIsSubmiting(true)
-            signIn(email, password)
+            signUp(email, password)
             .then((res)=>{
-                console.log(res)
-                router.push('/dashboard')
+                router.push('/dashboard');
             })
             .catch((err)=>{
                 toast({
-                    title: "Autenticacao falhou",
-                    description: `Nao foi efectuar login ${err.message}`,
+                    title: "Nao foi possivel criar a conta",
+                    description: `Nao criar a conta ${err.message}`,
                     status: "error",
                     duration: 4000,
                     isClosable: true,
@@ -70,10 +66,13 @@ import useMounted from '../hooks/useMounted';
         justify={'center'}
         bg={useColorModeValue('gray.50', 'gray.800')}>
 
-        <chakra.form onSubmit={handleSignIn}>
+        <chakra.form onSubmit={handleSignUp} w="full">
             <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
             <Stack align={'center'}>
-                <Heading fontSize={'4xl'}>Iniciar sessao na sua conta</Heading>
+                <Heading fontSize={'4xl'}>Crie uma conta</Heading>
+                <Text fontSize={'lg'} color={'gray.600'}>
+                para ter acesso a mais <Link color={'blue.400'}>funcionalidades</Link> ✌️
+                </Text>
             </Stack>
             <Box
                 rounded={'lg'}
@@ -97,14 +96,20 @@ import useMounted from '../hooks/useMounted';
                         onChange={(e)=>setPassword(e.target.value)}
                     />
                 </FormControl>
-            
+                <FormControl id="passwordConfirm">
+                    <FormLabel>Confirmar senha</FormLabel>
+                    <Input 
+                        type="password"
+                        value={passConfirm}
+                        onChange={(e)=>setPassConfirm(e.target.value)}
+                    />
+                </FormControl>
+                
                 <Stack spacing={10}>
                     <Stack
                     direction={{ base: 'column', sm: 'row' }}
                     align={'start'}
                     justify={'space-between'}>
-                    <Checkbox>Lembar de mim</Checkbox>
-                    <Link href="/redefinir-senha" color={'blue.400'}>Esqueceu a sua senha?</Link>
                     </Stack>
                     <Button
                         type="submit"
@@ -115,10 +120,8 @@ import useMounted from '../hooks/useMounted';
                             bg: 'blue.500',
                         }}
                     >
-                    Iniciar sessão
+                    Criar conta
                     </Button>
-                    <Link href="/registo" textAlign={"center"} color={'blue.400'}>Nao tem conta? Crie uma</Link>
-                    
                 </Stack>
                 </Stack>
             </Box>
