@@ -10,6 +10,8 @@ import { useAuth } from '../context/AuthContext'
 function Dashboard() {
     const router = useRouter();
     const {currentUser, loading, logout} = useAuth();
+
+    const bg = useColorModeValue('gray.50', 'gray.800')
     
 
     function handleLogout () {
@@ -33,7 +35,7 @@ function Dashboard() {
         mb={3}
         align={'center'}
         justify={'center'}
-        bg={useColorModeValue('gray.50', 'gray.800')}>
+        bg={bg}>
         <Box>
             <Avatar marginBottom="10px" size="2xl" name={currentUser?.email} src={currentUser?.photoURL} />
         </Box>
