@@ -7,7 +7,7 @@ import { useRouter } from 'next/dist/client/router';
 import React, { useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 
-function dashboard() {
+function Dashboard() {
     const router = useRouter();
     const {currentUser, loading, logout} = useAuth();
     
@@ -35,13 +35,14 @@ function dashboard() {
         justify={'center'}
         bg={useColorModeValue('gray.50', 'gray.800')}>
         <Box>
-            <Avatar size="2xl" name="user" src={currentUser?.photoURL} />
+            <Avatar marginBottom="10px" size="2xl" name={currentUser?.email} src={currentUser?.photoURL} />
         </Box>
-        <Heading textAlign={'center'} as="h1" size="md">
+        <Heading textAlign={'center'} as="h1" size="md" marginBottom="15px">
             Bem Vindo de volta {currentUser?.displayName}
         </Heading>
             Email: {currentUser?.email}
             <Button 
+                marginTop="10px"
                 colorScheme="blue"
                 onClick={handleLogout}
             >Logout</Button>
@@ -49,4 +50,4 @@ function dashboard() {
     )
 }
 
-export default dashboard
+export default Dashboard
