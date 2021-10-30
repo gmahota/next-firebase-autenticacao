@@ -36,6 +36,7 @@ function Dashboard() {
         align={'center'}
         justify={'center'}
         bg={bg}>
+             <PagesList/>
         <Box>
             <Avatar marginBottom="10px" size="2xl" name={currentUser?.email} src={currentUser?.photoURL} />
         </Box>

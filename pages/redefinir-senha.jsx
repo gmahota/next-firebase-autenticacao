@@ -15,6 +15,7 @@ import {
 
 import { useAuth } from '../context/AuthContext';
 import useMounted from '../hooks/useMounted';
+import PagesList from '../components/pagesList';
 
 
 export default function ResetPasswordForm(){
@@ -74,6 +75,7 @@ export default function ResetPasswordForm(){
             boxShadow={'lg'}
             p={6}
             my={12}>
+               <PagesList/>
                 <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
                   Redefinir a senha
                 </Heading>

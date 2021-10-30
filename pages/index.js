@@ -15,6 +15,7 @@ import {
   } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import PagesList from '../components/pagesList';
 import { useAuth } from '../context/AuthContext';
 import useMounted from '../hooks/useMounted';
   
@@ -72,6 +73,7 @@ import useMounted from '../hooks/useMounted';
 
         <chakra.form onSubmit={handleSignIn}>
             <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+            <PagesList/>
             <Stack align={'center'}>
                 <Heading fontSize={'4xl'}>Iniciar sessao na sua conta</Heading>
             </Stack>
