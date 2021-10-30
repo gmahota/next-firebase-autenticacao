@@ -6,6 +6,7 @@ import { Box, Flex, Heading } from '@chakra-ui/layout';
 import { useRouter } from 'next/dist/client/router';
 import React, { useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
+import PagesList from '../components/pagesList';
 
 function Dashboard() {
     const router = useRouter();
